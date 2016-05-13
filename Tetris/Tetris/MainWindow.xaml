@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Source="StartupPage.xaml"
+        Source="StartupPage.xaml" Icon="tetrisicon.ico" ResizeMode="CanMinimize"
         Title="Tetris" Height="525" Width="525" ShowsNavigationUI="False">
 </NavigationWindow>

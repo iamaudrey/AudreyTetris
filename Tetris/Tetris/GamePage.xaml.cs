@@ -36,7 +36,7 @@ namespace Tetris
             Label_exitLabel.Foreground = new SolidColorBrush(Color.FromRgb(68, 131, 68));
         }
 
-        private void Label_exitLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Label_exitLabel_MouseLeave(object sender, MouseEventArgs e)
         {
             Label_exitLabel.Foreground = new SolidColorBrush(Color.FromRgb(24, 64, 24));
         }

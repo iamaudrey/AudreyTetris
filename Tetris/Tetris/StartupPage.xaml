@@ -8,8 +8,15 @@
 	Title="StartupPage" Background="#FFD8FFF3">
 
     <Grid x:Name="Grid_mainGrid">
-        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="37,324,0,0" VerticalAlignment="Top" Height="42" Width="71" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
-        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="37,228,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp"/>
+        <Grid.Background>
+            <VisualBrush TileMode="Tile" Viewport="0, 0, 0.5, 0.5">
+                <VisualBrush.Visual>
+                    <Image Source="stars.gif" Stretch="None"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Grid.Background>
+        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="37,328,0,0" VerticalAlignment="Top" Height="38" Width="55" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
+        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="37,234,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp" Height="37"/>
 
     </Grid>
 </Page>
