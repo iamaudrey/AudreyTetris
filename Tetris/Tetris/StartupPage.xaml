@@ -1,0 +1,15 @@
+﻿<Page x:Name="Page_startupPage" x:Class="Tetris.StartupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="525" d:DesignWidth="525"
+	Title="StartupPage" Background="#FFD8FFF3">
+
+    <Grid x:Name="Grid_mainGrid">
+        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="37,324,0,0" VerticalAlignment="Top" Height="42" Width="71" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
+        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="37,228,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp"/>
+
+    </Grid>
+</Page>

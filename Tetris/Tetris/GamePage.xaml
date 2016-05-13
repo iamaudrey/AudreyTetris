@@ -1,0 +1,20 @@
+﻿<Page x:Name="Page_gamePage" x:Class="Tetris.GamePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="525" d:DesignWidth="525"
+	Title="GamePage">
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#FF3AB8A1" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
+
+    <Grid x:Name="Grid_mainGrid">
+        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="416,439,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeftButtonDown="Label_exitLabel_MouseLeftButtonDown" Cursor="Hand"/>
+
+    </Grid>
+</Page>
