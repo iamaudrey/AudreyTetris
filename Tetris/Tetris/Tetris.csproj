@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>tetrisicon.ico</ApplicationIcon>
+    <ApplicationIcon>tetrisicon32x32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -117,6 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="stars.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tetrisicon32x32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
