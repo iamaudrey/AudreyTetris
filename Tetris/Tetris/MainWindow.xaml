@@ -6,5 +6,5 @@
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
         Source="StartupPage.xaml" Icon="tetrisicon.ico" ResizeMode="CanMinimize"
-        Title="Tetris" Height="800" Width="650" ShowsNavigationUI="False">
+        Title="Tetris" Height="600" Width="500" ShowsNavigationUI="False">
 </NavigationWindow>

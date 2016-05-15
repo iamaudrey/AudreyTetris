@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="650"
+      d:DesignHeight="600" d:DesignWidth="500"
 	Title="StartupPage" Background="#FFD8FFF3">
 
     <Grid x:Name="Grid_mainGrid">
@@ -15,8 +15,8 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
-        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="246,586,0,0" VerticalAlignment="Top" Height="38" Width="54" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
-        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="182,518,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp" Height="36"/>
+        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="216,422,0,0" VerticalAlignment="Top" Height="38" Width="54" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
+        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="148,340,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp" Height="36"/>
 
     </Grid>
 </Page>

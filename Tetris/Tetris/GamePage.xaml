@@ -4,23 +4,24 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="650"
+      d:DesignHeight="600" d:DesignWidth="500"
 	Title="GamePage">
 
-    <Grid x:Name="Grid_mainGrid">
-        <Grid.Background>
+    <Canvas x:Name="Canvas_mainGrid">
+        <Canvas.Background>
             <VisualBrush TileMode="Tile" Viewport="0, 0, 0.5, 0.5">
                 <VisualBrush.Visual>
                     <Image Source="stars.gif" Stretch="None"/>
                 </VisualBrush.Visual>
             </VisualBrush>
-        </Grid.Background>
-        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="514,710,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38"/>
-        <Border BorderBrush="AntiqueWhite" BorderThickness="3px" HorizontalAlignment="Right" VerticalAlignment="Top"> 
-            <Canvas x:Name="Canvas_blockGrid" HorizontalAlignment="Center" Height="630" Margin="77,87,217,77" VerticalAlignment="Top" Width="350" Background="Black" >
-                
+        </Canvas.Background>
+        <Label x:Name="Label_exitLabel" Content="Exit" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38" Margin="381,521,56,41"/>
+        <Border BorderBrush="AntiqueWhite" BorderThickness="5" Height="360" Width="250" 
+                HorizontalAlignment="Left" Canvas.Left="26" Canvas.Top="59" CornerRadius="3">
+            <Canvas x:Name="Canvas_blockGrid" Background="Black">
+                <Rectangle Width="22" Height="22" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="109" Canvas.Top="175"></Rectangle>
             </Canvas>
         </Border>
 
-    </Grid>
+    </Canvas>
 </Page>
