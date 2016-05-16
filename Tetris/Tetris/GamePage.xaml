@@ -16,10 +16,19 @@
             </VisualBrush>
         </Canvas.Background>
         <Label x:Name="Label_exitLabel" Content="Exit" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38" Margin="381,521,56,41"/>
-        <Border BorderBrush="AntiqueWhite" BorderThickness="5" Height="360" Width="250" 
+        <Border BorderBrush="AntiqueWhite" BorderThickness="5" Height="435" Width="250" 
                 HorizontalAlignment="Left" Canvas.Left="26" Canvas.Top="59" CornerRadius="3">
             <Canvas x:Name="Canvas_blockGrid" Background="Black">
-                <Rectangle Width="22" Height="22" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="109" Canvas.Top="175"></Rectangle>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="24" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="168" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="48" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="192" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="72" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="96" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="120" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="144" Canvas.Top="174"/>
+                <Rectangle Width="24" Height="24" Stroke="AntiqueWhite" StrokeThickness="2" Fill="Blue" Canvas.Left="216" Canvas.Top="174"/>
             </Canvas>
         </Border>
 

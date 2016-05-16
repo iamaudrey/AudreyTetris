@@ -13,11 +13,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace Tetris
 {
     class Block
     {
+        //May or may not move this out to the game grid
+        private List<Rectangle> rectangles;
+        public List<Rectangle> Rectangles
+        {
+            get
+            {
+                return rectangles;
+            }
+            set
+            {
+                if (value != null)
+                    rectangles = value;
+            }
+        }
         private Cell[,] cells;
         public Cell[,] Cells
         {
@@ -50,6 +65,7 @@ namespace Tetris
         public Block()
         {
             originCoords = new int[2]{0,0};
+            rectangles = new List<Rectangle>();
         }
 
         //These methods return a new Block after rotating
