@@ -14,25 +14,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Tetris
 {
-    class Block
+    public class Block
     {
-        //May or may not move this out to the game grid
-        private List<Rectangle> rectangles;
-        public List<Rectangle> Rectangles
-        {
-            get
-            {
-                return rectangles;
-            }
-            set
-            {
-                if (value != null)
-                    rectangles = value;
-            }
-        }
         private Cell[,] cells;
         public Cell[,] Cells
         {
@@ -47,7 +34,8 @@ namespace Tetris
             }
         }
 
-
+        //Coordinates in the game grid that the bottom left corner of the block
+        //corresponds to. 
         private int[] originCoords;
         public int[] OriginCoords
         {
@@ -65,7 +53,6 @@ namespace Tetris
         public Block()
         {
             originCoords = new int[2]{0,0};
-            rectangles = new List<Rectangle>();
         }
 
         //These methods return a new Block after rotating
@@ -106,7 +93,7 @@ namespace Tetris
         }
     }
 
-    class BlockFactory
+    public class BlockFactory
     {
         Random rand;
         public BlockFactory()
@@ -273,23 +260,58 @@ namespace Tetris
         }
     }
 
-    class Cell
+    public class Cell
     {
         private bool isPopulated;
-        public bool IsPopulated { get; set; }
+        public bool IsPopulated
+        {
+            get
+            {
+                return isPopulated;
+            }
+            set
+            {
+                isPopulated = value;
+            }
+        }
         private string color;
         public string Color { get; set; }
+        private Rectangle rect;
+        public Rectangle Rect
+        {
+            get
+            {
+                return rect;
+            }
+            set
+            {
+                if (value != null)
+                    rect = value;
+            }
+        }
 
         //Constructors
         public Cell(string newColor)
         {
             isPopulated = true;
             color = newColor;
+            rect = new Rectangle();
+            rect.Stroke = Brushes.AntiqueWhite;
+            rect.StrokeThickness = 2;
+            rect.Height = 24;
+            rect.Width = 24;
+            rect.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(newColor));
         }
         public Cell(string newColor, bool populated)
         {
             isPopulated = populated;
             color = newColor;
+            rect = new Rectangle();
+            rect.Stroke = Brushes.AntiqueWhite;
+            rect.StrokeThickness = 2;
+            rect.Height = 24;
+            rect.Width = 24;
+            rect.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(newColor));
         }
     }
 }

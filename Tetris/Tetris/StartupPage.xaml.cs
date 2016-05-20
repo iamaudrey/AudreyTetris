@@ -52,7 +52,7 @@ namespace Tetris
 
         private void Label_newGameLabel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.NavigationService.Navigate(new GamePage());
+            this.NavigationService.Navigate(new GamePage(new GameState()));
         }
 
     }
