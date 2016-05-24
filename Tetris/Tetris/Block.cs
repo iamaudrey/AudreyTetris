@@ -56,10 +56,8 @@ namespace Tetris
         }
 
         //These methods return a new Block after rotating
-        public Block RotateLeft()
+        public void RotateLeft()
         {
-            Block newBlock = new Block();
-            newBlock.OriginCoords = this.OriginCoords;
             Cell[,] newCells = new Cell[cells.GetLength(0), cells.GetLength(1)]; 
             int max = cells.GetLength(0) - 1;
             for (int i = 0; i < cells.GetLength(0); i++)
@@ -70,8 +68,7 @@ namespace Tetris
                 }
 
             }
-            newBlock.Cells = newCells;
-            return newBlock;
+            Cells = newCells;
         }
 
         public Block RotateRight()
@@ -91,6 +88,25 @@ namespace Tetris
             newBlock.Cells = newCells;
             return newBlock;
         }
+        public Block CreateCopy()
+        {
+            Block newBlock = new Block();
+            newBlock.OriginCoords = originCoords;
+            newBlock.Cells = cells;
+            return newBlock;
+        }
+        public void MoveLeft()
+        {
+            originCoords[0]--;
+        }
+        public void MoveRight()
+        {
+            originCoords[0]++;
+        }
+        public void MoveDown()
+        {
+            originCoords[1]--;
+        }
     }
 
     public class BlockFactory
@@ -104,11 +120,11 @@ namespace Tetris
         {
             int randomInt = rand.Next(100);
             Block result;
-            if(randomInt < 14)
+            if(randomInt < 13)
             {
                 result = NewLeftLBlock();
             }
-            else if(randomInt < 28)
+            else if(randomInt < 27)
             {
                 result = NewRightLBlock();
             }
@@ -135,7 +151,7 @@ namespace Tetris
             randomInt = rand.Next(4);
             for(int i = 0; i < randomInt; i++)
             {
-                result = result.RotateLeft();
+                result.RotateLeft();
             }
             return result;
         }

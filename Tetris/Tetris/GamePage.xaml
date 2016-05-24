@@ -8,6 +8,10 @@
 	Title="GamePage" Focusable="True">
     <Page.CommandBindings>
         <CommandBinding Command="self:TetrisCommands.DropBlock" Executed="RotateBlock"/>
+        <CommandBinding Command="self:TetrisCommands.MoveBlockLeft" Executed="MoveBlockLeft"/>
+        <CommandBinding Command="self:TetrisCommands.MoveBlockRight" Executed="MoveBlockRight"/>
+        <CommandBinding Command="self:TetrisCommands.UpKey"/>
+        <CommandBinding Command="self:TetrisCommands.DownKey"/>
     </Page.CommandBindings>
     <Canvas x:Name="Canvas_mainGrid">
         <Canvas.Background>

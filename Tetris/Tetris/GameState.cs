@@ -101,6 +101,13 @@ namespace Tetris
         {
             factory = new BlockFactory();
             grid = new Cell[10, 18];
+            for(int i = 0; i < 10; i++)
+            {
+                for(int j = 0; j < 18; j++)
+                {
+                    grid[i, j] = new Cell("#FFFFFF", false);
+                }
+            }
             score = 0;
             level = 1;
             currentBlock = factory.GetRandomBlock();
