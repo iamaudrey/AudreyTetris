@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,7 @@ namespace Tetris
     public partial class GamePage : Page
     {
         private GameState gameState;
-        private Timer timer;
+        private System.Timers.Timer timer;
         private Random rand;
         private bool settled = false;
         private bool shortcutsEnabled = false;
@@ -42,6 +43,7 @@ namespace Tetris
 
         private void Label_exitLabel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            timer.Stop();
             Window.GetWindow(this).Close();
         }
 
@@ -67,19 +69,24 @@ namespace Tetris
             b.OriginCoords = new int[] { randomX, originY };
             gameState.CurrentBlock = b;
             AddBlockToGrid(b);
-            shortcutsEnabled = true;
-            //TODO: Make dependent on level
-            timer = new Timer(500);
-            timer.Elapsed += BlockDown;
-            timer.Start();
+            if(!SpaceAlreadyOccupied())
+            {
+                shortcutsEnabled = true;
+                //TODO: Make dependent on level
+                timer = new System.Timers.Timer(500);
+                timer.Elapsed += BlockDown;
+                timer.Start();
+            }
+            else
+            {
+                GameOver();
+            }
         }
         //This method takes a block and displays it on the game grid
         private void AddBlockToGrid(Block newBlock)
         {
             //Check for valid origin coordinates
-            if(newBlock.OriginCoords.Length < 2 /*|| newBlock.OriginCoords[0] < 0 
-                || newBlock.OriginCoords[1] > (17 - newBlock.Cells.GetLength(0)) ||
-                newBlock.OriginCoords[1] < 0 || newBlock.OriginCoords[0] > 10*/)
+            if(newBlock.OriginCoords.Length < 2)
             {
                 return;
             }
@@ -222,6 +229,24 @@ namespace Tetris
             return true;
         }
 
+        //This method determines whether or not the current block collides with existing blocks on the game grid
+        private bool SpaceAlreadyOccupied()
+        {
+            for(int i = 0; i < gameState.CurrentBlock.Cells.GetLength(0); i++)
+            {
+                for(int j = 0; j < gameState.CurrentBlock.Cells.GetLength(1); j++)
+                {
+                    if(gameState.CurrentBlock.Cells[i,j].IsPopulated && gameState.Grid[gameState.CurrentBlock.OriginCoords[0] + i,
+                        gameState.CurrentBlock.OriginCoords[1] + j].IsPopulated)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        }
+
         private void RemoveBlockFromGrid(Block block)
         {
             for(int i = 0; i < block.Cells.GetLength(0); i++)
@@ -257,6 +282,14 @@ namespace Tetris
                 Application.Current.Dispatcher.Invoke(new DroppedBlockCallback(HandleDroppedBlock));
             }
         }
+        private void DropBlock(object sender, RoutedEventArgs e)
+        {
+            timer.Stop();
+            shortcutsEnabled = false;
+            timer = new System.Timers.Timer(10);
+            timer.Elapsed += BlockDown;
+            timer.Start();
+        }
 
         private void HandleDroppedBlock()
         {
@@ -265,16 +298,74 @@ namespace Tetris
             {
                 for (int j = 0; j < gameState.CurrentBlock.Cells.GetLength(1); j++)
                 {
-                    if (gameState.CurrentBlock.Cells[i,j].IsPopulated
-                        /*gameState.CurrentBlock.OriginCoords[0] + i >= 0 && gameState.CurrentBlock.OriginCoords[0] + i < 10 &&
-                        gameState.CurrentBlock.OriginCoords[1] + j >= 0 && gameState.CurrentBlock.OriginCoords[1] + j < 18*/)
+                    if (gameState.CurrentBlock.Cells[i,j].IsPopulated)
                     {
                         gameState.Grid[gameState.CurrentBlock.OriginCoords[0] + i, gameState.CurrentBlock.OriginCoords[1] + j] = gameState.CurrentBlock.Cells[i, j];
                     }
                 }
             }
+            List<int> fullRows = new List<int>();
+            for (int i = 0; i < gameState.Grid.GetLength(1); i++)
+            {
+                bool rowFull = true;
+                for(int j = 0; j < gameState.Grid.GetLength(0); j++)
+                {
+                    if(!gameState.Grid[j,i].IsPopulated)
+                    {
+                        rowFull = false;
+                    }
+                }
+                if(rowFull)
+                {
+                    fullRows.Add(i);
+                }
+            }
+            foreach(int i in fullRows)
+            {
+                for(int j = 0; j < gameState.Grid.GetLength(0); j++)
+                {
+                    Canvas_blockGrid.Children.Remove(gameState.Grid[j, i].Rect);
+                    gameState.Grid[j, i].IsPopulated = false;
+                }
+            }
+            Canvas_blockGrid.InvalidateVisual();
+            Thread.Sleep(500);
+            for(int i = 0; i < fullRows.Count; i++)
+            {
+                int numberOfRows = 1;
+                while(fullRows.Contains(fullRows.ElementAt(i) + numberOfRows))
+                {
+                    numberOfRows++;
+                }
+                DropRows(fullRows.ElementAt(i), numberOfRows);
+                i += (numberOfRows - 1);
+            }
             //TODO: Check for full row
             NewBlock();
+        }
+        private void DropRows(int startRowIndex, int numberOfRows)
+        {
+            for(int i = 0; i < numberOfRows; i++)
+            {
+                int bottomIndex = startRowIndex + numberOfRows - i;
+                for(int row = bottomIndex; row < gameState.Grid.GetLength(1); row++)
+                {
+                    for(int column = 0; column < gameState.Grid.GetLength(0); column++)
+                    {
+                        gameState.Grid[column, row - 1] = gameState.Grid[column, row];
+                        Canvas.SetTop(gameState.Grid[column, row - 1].Rect, Canvas.GetTop(gameState.Grid[column, row - 1].Rect) + 24);
+                    }
+                }
+                for(int column = 0; column < gameState.Grid.GetLength(0); column++)
+                {
+                    gameState.Grid[column, gameState.Grid.GetLength(1) - 1] = new Cell("#FFFFFF", false);
+                }
+                foreach(UIElement e in Canvas_blockGrid.Children)
+                {
+                    e.InvalidateVisual();
+                }
+                Thread.Sleep(500);
+            }
         }
         private void LevelUp()
         {
@@ -282,6 +373,16 @@ namespace Tetris
         }
         private void GameOver()
         {
+            shortcutsEnabled = false;
+            TextBlock gameOverBlock = new TextBlock();
+            gameOverBlock.Text = "Game Over";
+            gameOverBlock.Width = 300;
+            gameOverBlock.Height = 250;
+            gameOverBlock.Background = Brushes.Blue;
+            gameOverBlock.FontSize = 20;
+            Canvas.SetTop(gameOverBlock, 100);
+            Canvas.SetLeft(gameOverBlock, 50);
+            Canvas_mainGrid.Children.Add(gameOverBlock);
             //TODO: Game OVer
         }
 
@@ -296,50 +397,54 @@ namespace Tetris
         public TetrisCommands() { }
         //This command will Drop the block down (eventually)
         public static readonly RoutedUICommand DropBlock = new RoutedUICommand(
-        "DropBlock",
-        "DropBlock",
-        typeof(TetrisCommands),
-        new InputGestureCollection()
-        {
-                    //Set the shortcut to CTRL + P
-                    new KeyGesture(Key.Space)
-        });
+            "DropBlock",
+            "DropBlock",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                        new KeyGesture(Key.Space)
+            });
+        public static readonly RoutedUICommand RotateBlock = new RoutedUICommand(
+            "RotateBlock",
+            "RotateBlock",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.Tab)
+            });
         public static readonly RoutedUICommand MoveBlockLeft = new RoutedUICommand(
-        "MoveBlockLeft",
-        "MoveBlockLeft",
-        typeof(TetrisCommands),
-        new InputGestureCollection()
-        {
-                            //Set the shortcut to CTRL + P
-                            new KeyGesture(Key.Left)
-        });
+            "MoveBlockLeft",
+            "MoveBlockLeft",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                                new KeyGesture(Key.Left)
+            });
         public static readonly RoutedUICommand MoveBlockRight = new RoutedUICommand(
-        "MoveBlockRight",
-        "MoveBlockRight",
-        typeof(TetrisCommands),
-        new InputGestureCollection()
-        {
-                                    //Set the shortcut to CTRL + P
-                                    new KeyGesture(Key.Right)
-        });
+            "MoveBlockRight",
+            "MoveBlockRight",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.Right)
+            });
         //The upkey and the down key won't do anything, but I need to handle the event anyway because
         //otherwise the page will lose focus.
         public static readonly RoutedUICommand UpKey = new RoutedUICommand(
-        "UpKey",
-        "UpKey",
-        typeof(TetrisCommands),
-        new InputGestureCollection()
-        {
-                                    new KeyGesture(Key.Up)
-        });
+            "UpKey",
+            "UpKey",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.Up)
+            });
         public static readonly RoutedUICommand DownKey = new RoutedUICommand(
-        "DownKey",
-        "DownKey",
-        typeof(TetrisCommands),
-        new InputGestureCollection()
-        {
-                                    //Set the shortcut to CTRL + P
-                                    new KeyGesture(Key.Down)
-        });
+            "DownKey",
+            "DownKey",
+            typeof(TetrisCommands),
+            new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.Down)
+            });
     }
 }

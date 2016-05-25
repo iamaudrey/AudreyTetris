@@ -194,15 +194,15 @@ namespace Tetris
         {
             Block result = new Block();
             Cell[,] newCells = new Cell[3, 3];
-            newCells[0, 0] = new Cell("#99ff33", false);
-            newCells[0, 1] = new Cell("#99ff33");
-            newCells[0, 2] = new Cell("#99ff33");
-            newCells[1, 0] = new Cell("#99ff33", false);
-            newCells[1, 1] = new Cell("#99ff33", false);
-            newCells[1, 2] = new Cell("#99ff33");
-            newCells[2, 0] = new Cell("#99ff33", false);
-            newCells[2, 1] = new Cell("#99ff33", false);
-            newCells[2, 2] = new Cell("#99ff33");
+            newCells[0, 0] = new Cell("#006600", false);
+            newCells[0, 1] = new Cell("#006600");
+            newCells[0, 2] = new Cell("#006600");
+            newCells[1, 0] = new Cell("#006600", false);
+            newCells[1, 1] = new Cell("#006600", false);
+            newCells[1, 2] = new Cell("#006600");
+            newCells[2, 0] = new Cell("#006600", false);
+            newCells[2, 1] = new Cell("#006600", false);
+            newCells[2, 2] = new Cell("#006600");
             result.Cells = newCells;
             return result;
         }
@@ -210,10 +210,10 @@ namespace Tetris
         public Block NewSquareBlock()
         {
             Cell[,] cells = new Cell[2,2];
-            cells[0, 0] = new Cell("#2B72FF");
-            cells[0, 1] = new Cell("#2B72FF");
-            cells[1, 0] = new Cell("#2B72FF");
-            cells[1, 1] = new Cell("#2B72FF");
+            cells[0, 0] = new Cell("#000099");
+            cells[0, 1] = new Cell("#000099");
+            cells[1, 0] = new Cell("#000099");
+            cells[1, 1] = new Cell("#000099");
             Block result = new Block();
             result.Cells = cells;
             return result;

@@ -31,7 +31,7 @@ namespace Tetris
                 player.Open(new Uri("..\\..\\Content\\moon_theme.mp3", UriKind.Relative));
                 player.Volume = .25;
                 player.MediaEnded += new EventHandler(SongEnded);
-                //player.Play();
+                player.Play();
             }
             catch(Exception e)
             {
