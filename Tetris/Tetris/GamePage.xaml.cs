@@ -30,6 +30,8 @@ namespace Tetris
         private bool settled = false;
         private bool shortcutsEnabled = false;
         private bool isRunning;
+        private bool canPause = false;
+        private bool canResume = false;
         public GamePage(GameState state)
         {
             InitializeComponent();
@@ -38,6 +40,13 @@ namespace Tetris
             gameState = state;
             this.Focus();
             isRunning = true;
+            gameState.NextBlock = gameState.Factory.GetRandomBlock();
+            int randomX = rand.Next(9 - gameState.NextBlock.Cells.GetLength(0));
+            int originY = 18 - gameState.NextBlock.Cells.GetLength(1);
+            TextBlock_Level.Text = gameState.Level.ToString();
+            TextBlock_CurrentRows.Text = gameState.RowsForCurrentLevel.ToString();
+            TextBlock_CurrentScore.Text = gameState.Score.ToString();
+            gameState.NextBlock.OriginCoords = new int[] { randomX, originY };
             NewBlock();
         }
 
@@ -63,17 +72,22 @@ namespace Tetris
         private void NewBlock()
         {
             settled = false;
-            Block b = gameState.Factory.GetRandomBlock();
-            int randomX = rand.Next(9 - b.Cells.GetLength(0));
-            int originY = 18 - b.Cells.GetLength(1);
-            b.OriginCoords = new int[] { randomX, originY };
-            gameState.CurrentBlock = b;
-            AddBlockToGrid(b);
+            gameState.CurrentBlock = gameState.NextBlock;
+            foreach(Cell c in gameState.CurrentBlock.Cells)
+            {
+                Canvas_nextBlock.Children.Remove(c.Rect);
+            }
+            gameState.NextBlock = gameState.Factory.GetRandomBlock();
+            int randomX = rand.Next(9 - gameState.NextBlock.Cells.GetLength(0));
+            int originY = 18 - gameState.NextBlock.Cells.GetLength(1);
+            gameState.NextBlock.OriginCoords = new int[] { randomX, originY };
+            AddNextBlockToGrid(gameState.NextBlock);
+            AddBlockToGrid(gameState.CurrentBlock);
             if(!SpaceAlreadyOccupied())
             {
                 shortcutsEnabled = true;
                 //TODO: Make dependent on level
-                timer = new System.Timers.Timer(500);
+                timer = new System.Timers.Timer(500 * (Math.Pow(.75, gameState.Level - 1)));
                 timer.Elapsed += BlockDown;
                 timer.Start();
             }
@@ -102,6 +116,22 @@ namespace Tetris
                         Canvas_blockGrid.Children.Add(newBlock.Cells[i, j].Rect);
                     }
 
+                }
+            }
+        }
+
+        private void AddNextBlockToGrid(Block newBlock)
+        {
+            for (int i = 0; i < newBlock.Cells.GetLength(0); i++)
+            {
+                for (int j = newBlock.Cells.GetLength(1) - 1; j >= 0; j--)
+                {
+                    if (newBlock.Cells[i, j].IsPopulated)
+                    {
+                        Canvas.SetLeft(newBlock.Cells[i, j].Rect, (24 * i) + 3);
+                        Canvas.SetTop(newBlock.Cells[i, j].Rect, (24 * (newBlock.Cells.GetLength(1) - j - 1)) + 3);
+                        Canvas_nextBlock.Children.Add(newBlock.Cells[i, j].Rect);
+                    }
                 }
             }
         }
@@ -156,6 +186,28 @@ namespace Tetris
             }
         }
 
+        private void PauseGame(object sender, RoutedEventArgs e)
+        {
+            timer.Stop();
+            shortcutsEnabled = false;
+            canPause = false;
+            canResume = true;
+        }
+        private void ResumeGame(object sender, RoutedEventArgs e)
+        {
+            timer.Start();
+            shortcutsEnabled = true;
+            canPause = true;
+            canResume = false;
+        }
+
+        private void DebugGameState(object sender, RoutedEventArgs e)
+        {
+            string x = gameState.GetType().ToString();
+            var y = isRunning;
+            var z = timer;
+            Console.WriteLine(x);
+        }
         //Will have to test all populated cells and coordinates to make sure they're in frame
         private bool CanRotate()
         {
@@ -326,10 +378,12 @@ namespace Tetris
                 {
                     Canvas_blockGrid.Children.Remove(gameState.Grid[j, i].Rect);
                     gameState.Grid[j, i].IsPopulated = false;
+                    gameState.Grid[j, i].Rect.InvalidateVisual();
                 }
             }
             Canvas_blockGrid.InvalidateVisual();
             Thread.Sleep(500);
+            int rowOffset = 0;
             for(int i = 0; i < fullRows.Count; i++)
             {
                 int numberOfRows = 1;
@@ -337,11 +391,29 @@ namespace Tetris
                 {
                     numberOfRows++;
                 }
-                DropRows(fullRows.ElementAt(i), numberOfRows);
+                DropRows(fullRows.ElementAt(i) - rowOffset, numberOfRows);
                 i += (numberOfRows - 1);
+                rowOffset += numberOfRows;
             }
-            //TODO: Check for full row
-            NewBlock();
+            gameState.RowsForCurrentLevel += fullRows.Count;
+            if(fullRows.Count > 0)
+            {
+                gameState.Score += (fullRows.Count * 100 * gameState.Level);
+                if (fullRows.Count > 1)
+                {
+                    gameState.Score += ((fullRows.Count - 1) * 50 * gameState.Level);
+                }
+                TextBlock_CurrentScore.Text = gameState.Score.ToString();
+            }
+            if(gameState.RowsForCurrentLevel >= 10)
+            {
+                LevelUp();
+            }
+            else
+            {
+                TextBlock_CurrentRows.Text = gameState.RowsForCurrentLevel.ToString();
+                NewBlock();
+            } 
         }
         private void DropRows(int startRowIndex, int numberOfRows)
         {
@@ -369,7 +441,11 @@ namespace Tetris
         }
         private void LevelUp()
         {
-            //TODO: Level up
+            gameState.Level++;
+            gameState.RowsForCurrentLevel = 0;
+            TextBlock_Level.Text = gameState.Level.ToString();
+            TextBlock_CurrentRows.Text = gameState.RowsForCurrentLevel.ToString();
+            NewBlock();
         }
         private void GameOver()
         {
@@ -389,6 +465,14 @@ namespace Tetris
         public void CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = shortcutsEnabled;
+        }
+        public void CanPause(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = canPause;
+        }
+        public void CanResume(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = canResume;
         }
     }
 
@@ -445,6 +529,30 @@ namespace Tetris
             new InputGestureCollection()
             {
                                         new KeyGesture(Key.Down)
+            });
+        public static readonly RoutedUICommand PauseGame = new RoutedUICommand(
+        "PauseGame",
+        "PauseGame",
+        typeof(TetrisCommands),
+        new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.P, ModifierKeys.Control)
+            });
+        public static readonly RoutedUICommand ResumeGame = new RoutedUICommand(
+        "ResumeGame",
+        "ResumeGame",
+        typeof(TetrisCommands),
+        new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.G, ModifierKeys.Control)
+            });
+        public static readonly RoutedUICommand DebugGame = new RoutedUICommand(
+        "DebugGame",
+        "DebugGame",
+        typeof(TetrisCommands),
+        new InputGestureCollection()
+            {
+                                        new KeyGesture(Key.Escape)
             });
     }
 }

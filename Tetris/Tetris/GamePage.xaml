@@ -13,6 +13,9 @@
         <CommandBinding Command="self:TetrisCommands.MoveBlockRight" Executed="MoveBlockRight" CanExecute="CanExecute"/>
         <CommandBinding Command="self:TetrisCommands.UpKey"/>
         <CommandBinding Command="self:TetrisCommands.DownKey"/>
+        <CommandBinding Command="self:TetrisCommands.PauseGame" Executed="PauseGame"/>
+        <CommandBinding Command="self:TetrisCommands.ResumeGame" Executed="ResumeGame"/>
+        <CommandBinding Command="self:TetrisCommands.DebugGame" Executed="DebugGameState"/>
     </Page.CommandBindings>
     <Canvas x:Name="Canvas_mainGrid">
         <Canvas.Background>
@@ -25,9 +28,18 @@
         <Label x:Name="Label_exitLabel" Content="Exit" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38" Margin="381,521,56,41"/>
         <Border BorderBrush="AntiqueWhite" BorderThickness="5" Height="442" Width="250" 
                 HorizontalAlignment="Left" Canvas.Left="26" Canvas.Top="59" CornerRadius="3">
-            <Canvas x:Name="Canvas_blockGrid" Background="Black"> 
+            <Canvas x:Name="Canvas_blockGrid" Background="Black">
             </Canvas>
         </Border>
-
+        <Border BorderBrush="AntiqueWhite" BorderThickness="5" CornerRadius="3" Height="110" Canvas.Left="335" Canvas.Top="59" Width="110">
+            <Canvas Background="Black" Name="Canvas_nextBlock">
+            </Canvas>
+        </Border>
+        <TextBlock x:Name="Label_Level" Text="Level" Canvas.Left="335" Canvas.Top="196" Width="103" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_Level" Canvas.Left="360" TextWrapping="Wrap" Canvas.Top="229" Height="23" Width="60" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_CurrentRows" Text="Current Rows" Canvas.Left="317" Canvas.Top="257" Width="145" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_CurrentRows" Canvas.Left="360" TextWrapping="Wrap" Canvas.Top="290" Height="23" Width="60" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_CurrentScore" Text="Current Score" Canvas.Left="317" Canvas.Top="318" Width="145" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_CurrentScore" Canvas.Left="335" TextWrapping="Wrap" Canvas.Top="351" Height="23" Width="110" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
     </Canvas>
 </Page>

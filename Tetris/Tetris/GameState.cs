@@ -87,6 +87,19 @@ namespace Tetris
                     score = value;
             }
         }
+        private int rowsForCurrentLevel;
+        public int RowsForCurrentLevel
+        {
+            get
+            {
+                return rowsForCurrentLevel;
+            }
+            set
+            {
+                if (value >= 0)
+                    rowsForCurrentLevel = value;
+            }
+        }
         //No need to set this value after constructor.
         public BlockFactory Factory
         {
@@ -112,6 +125,7 @@ namespace Tetris
             level = 1;
             currentBlock = factory.GetRandomBlock();
             nextBlock = factory.GetRandomBlock();
+            rowsForCurrentLevel = 0;
         }
     }
 }
