@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,23 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Tetris
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    /// //This window is just a container for the Frame that navigates between the pages for the game.
-    public partial class MainWindow : Window
+    public partial class AboutWindow : Window
     {
-        
-        public MainWindow()
+        public AboutWindow()
         {
             InitializeComponent();
-
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

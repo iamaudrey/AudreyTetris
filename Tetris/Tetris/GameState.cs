@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*The purpose of this class is to store and manage all of the data pertaining to a Tetris game. This includes information
+/*
+GameState.cs
+Audrey Henry
+The purpose of this class is to store and manage all of the data pertaining to a Tetris game. This includes information
 like score, the cells in the current grid, the block that is currently falling, the next block that will fall, and the
 current level.*/
 namespace Tetris
@@ -100,12 +103,19 @@ namespace Tetris
                     rowsForCurrentLevel = value;
             }
         }
-        //No need to set this value after constructor.
+
         public BlockFactory Factory
         {
             get
             {
                 return factory;
+            }
+            set
+            {
+                if(value != null)
+                {
+                    factory = value;
+                }
             }
         }
 

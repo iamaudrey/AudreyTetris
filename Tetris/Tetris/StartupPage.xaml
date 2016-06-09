@@ -15,8 +15,25 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
-        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="216,422,0,0" VerticalAlignment="Top" Height="38" Width="54" FontFamily="Comic Sans MS" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
-        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="148,340,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp" Height="36"/>
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Name="MenuItem_File" Header="_Game" >
+                <MenuItem Header="_New Game" Name="MenuItem_File_NewGame" Click="MenuItem_File_NewGame_Click"/>
+                <MenuItem Header="_Save Game" Name="MenuItem_File_SaveGame" IsEnabled="False"/>
+                <MenuItem Header="_Load Game" Name="MenuItem_File_LoadGame" Click="MenuItem_File_LoadGame_Click"/>
+                <MenuItem Header="_Quit" Name="MenuItem_File_Quit" Click="MenuItem_File_Quit_Click"/>
+            </MenuItem>
+            <MenuItem Name="MenuItem_Options" Header="_Options" >
+                <MenuItem Name="MenuItem_Options_Music" Header="_Play Music" IsCheckable="True" IsChecked="True" Click="MenuItem_Options_Music_Click"/>
+            </MenuItem>
+            <MenuItem Name="MenuItem_Help" Header="_Help" >
+                <MenuItem Name="MenuItem_Help_About" Header="_About" Click="MenuItem_Help_About_Click" />
+                <MenuItem Name="MenuItem_Help_HowToPlay" Header="_How to Play" Click="MenuItem_Help_HowToPlay_Click" />
+            </MenuItem>
+        </Menu>
+        <Label x:Name="Label_exitLabel" Content="Exit" HorizontalAlignment="Left" Margin="223,422,0,0" VerticalAlignment="Top" Height="38" Width="68" FontFamily="Magneto" FontSize="24" Foreground="#FF184018" Cursor="Hand" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" MouseLeave="Label_exitLabel_MouseLeave"/>
+        <Label x:Name="Label_newGameLabel" Content="Start New Game" HorizontalAlignment="Left" Margin="142,340,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Magneto" FontSize="24" MouseEnter="Label_newGameLabel_MouseEnter" MouseLeave="Label_newGameLabel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Label_newGameLabel_MouseLeftButtonUp" Height="36"/>
+        <Label x:Name="Label_LoadGame" Content="Load Game" HorizontalAlignment="Left" Margin="177,381,0,0" VerticalAlignment="Top" Foreground="#FF184018" FontFamily="Magneto" FontSize="24" MouseEnter="Label_LoadGame_MouseEnter" Cursor="Hand" MouseLeftButtonUp="Label_LoadGame_MouseLeftButtonUp" Height="36" MouseLeave="Label_LoadGame_MouseLeave"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,187,0,0" TextWrapping="Wrap" Text="Tetris" VerticalAlignment="Top" Height="77" Width="480" FontSize="64" FontFamily="Magneto" Foreground="#FF184018" TextAlignment="Center"/>
 
     </Grid>
 </Page>

@@ -15,7 +15,7 @@
         <CommandBinding Command="self:TetrisCommands.DownKey"/>
         <CommandBinding Command="self:TetrisCommands.PauseGame" Executed="PauseGame"/>
         <CommandBinding Command="self:TetrisCommands.ResumeGame" Executed="ResumeGame"/>
-        <CommandBinding Command="self:TetrisCommands.DebugGame" Executed="DebugGameState"/>
+        <CommandBinding Command="self:TetrisCommands.LevelUp" Executed="LevelUpCheat" CanExecute="CanExecute"/>
     </Page.CommandBindings>
     <Canvas x:Name="Canvas_mainGrid">
         <Canvas.Background>
@@ -25,7 +25,21 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Canvas.Background>
-        <Label x:Name="Label_exitLabel" Content="Exit" Foreground="#FF184018" FontFamily="Comic Sans MS" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38" Margin="381,521,56,41"/>
+        <Menu Height="20" Width="500" Name="Menu_MainMenu">
+            <MenuItem Name="MenuItem_File" Header="_Game" >
+                <MenuItem Header="_New Game" Name="MenuItem_File_NewGame" Click="MenuItem_File_NewGame_Click"/>
+                <MenuItem Header="_Save Game" Name="MenuItem_File_SaveGame" Click="MenuItem_File_SaveGame_Click"/>
+                <MenuItem Header="_Load Game" Name="MenuItem_File_LoadGame" Click="MenuItem_File_LoadGame_Click"/>
+                <MenuItem Header="_Quit" Name="MenuItem_File_Quit" Click="MenuItem_File_Quit_Click"/>
+            </MenuItem>
+            <MenuItem Name="MenuItem_Options" Header="_Options" >
+                <MenuItem Name="MenuItem_Options_Music" Header="_Play Music" IsCheckable="True" IsChecked="True" Click="MenuItem_Options_Music_Click"/>
+            </MenuItem>
+            <MenuItem Name="MenuItem_Help" Header="_Help" >
+                <MenuItem Name="MenuItem_Help_About" Header="_About" Click="MenuItem_Help_About_Click" />
+                <MenuItem Name="MenuItem_Help_HowToPlay" Header="_How to Play" Click="MenuItem_Help_HowToPlay_Click" />
+            </MenuItem>
+        </Menu>
         <Border BorderBrush="AntiqueWhite" BorderThickness="5" Height="442" Width="250" 
                 HorizontalAlignment="Left" Canvas.Left="26" Canvas.Top="59" CornerRadius="3">
             <Canvas x:Name="Canvas_blockGrid" Background="Black">
@@ -35,11 +49,19 @@
             <Canvas Background="Black" Name="Canvas_nextBlock">
             </Canvas>
         </Border>
-        <TextBlock x:Name="Label_Level" Text="Level" Canvas.Left="335" Canvas.Top="196" Width="103" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
-        <TextBlock x:Name="TextBlock_Level" Canvas.Left="360" TextWrapping="Wrap" Canvas.Top="229" Height="23" Width="60" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
-        <TextBlock x:Name="Label_CurrentRows" Text="Current Rows" Canvas.Left="317" Canvas.Top="257" Width="145" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
-        <TextBlock x:Name="TextBlock_CurrentRows" Canvas.Left="360" TextWrapping="Wrap" Canvas.Top="290" Height="23" Width="60" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
-        <TextBlock x:Name="Label_CurrentScore" Text="Current Score" Canvas.Left="317" Canvas.Top="318" Width="145" FontFamily="Comic Sans MS" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
-        <TextBlock x:Name="TextBlock_CurrentScore" Canvas.Left="335" TextWrapping="Wrap" Canvas.Top="351" Height="23" Width="110" FontSize="20" FontFamily="Comic Sans MS" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_Level" Canvas.Left="328" Canvas.Top="200" Width="103" FontFamily="Magneto" FontSize="20" Foreground="#FF184018" TextAlignment="Center"><Run Text="Level"/></TextBlock>
+        <TextBlock x:Name="TextBlock_Level" Canvas.Left="335" TextWrapping="Wrap" Canvas.Top="229" Height="23" Width="69" FontSize="20" FontFamily="Magneto" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_CurrentRows" Text="Current Rows" Canvas.Left="300" Canvas.Top="257" Width="162" FontFamily="Magneto" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_CurrentRows" Canvas.Left="346" TextWrapping="Wrap" Canvas.Top="290" Height="23" Width="60" FontSize="20" FontFamily="Magneto" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_CurrentScore" Text="Current Score" Canvas.Left="300" Canvas.Top="318" Width="162" FontFamily="Magneto" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_CurrentScore" Canvas.Left="328" TextWrapping="Wrap" Canvas.Top="347" Height="23" Width="110" FontSize="20" FontFamily="Magneto" Foreground="#FF184018" TextAlignment="Right"/>
+        <TextBlock x:Name="Label_HighScore" Text="High Score" Canvas.Left="300" Canvas.Top="379" Width="162" FontFamily="Magneto" FontSize="20" Foreground="#FF184018" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock_HighScore" Canvas.Left="328" TextWrapping="Wrap" Canvas.Top="408" Height="23" Width="110" FontSize="20" FontFamily="Magneto" Foreground="#FF184018" TextAlignment="Right"/>
+        <Label x:Name="Label_MainMenu" Content="Main Menu" Foreground="#FF184018" FontFamily="Magneto" FontSize="24" MouseEnter="Label_MainMenu_MouseEnter" Cursor="Hand" MouseLeave="Label_MainMenu_MouseLeave" Height="38" Canvas.Left="214" Canvas.Top="532" MouseLeftButtonUp="Label_MainMenu_MouseLeftButtonUp"/>
+        <Label x:Name="Label_SaveGame" Content="Save Game" Foreground="#FF184018" FontFamily="Magneto" FontSize="24" MouseEnter="Label_SaveGame_MouseEnter" Cursor="Hand" MouseLeave="Label_SaveGame_MouseLeave" Height="38" Canvas.Left="26" Canvas.Top="532" MouseLeftButtonUp="Label_SaveGame_MouseLeftButtonUp"/>
+        <Label x:Name="Label_exitLabel" Content="Exit" Foreground="#FF184018" FontFamily="Magneto" FontSize="24" MouseLeftButtonUp="Label_exitLabel_MouseLeftButtonUp" MouseEnter="Label_exitLabel_MouseEnter" Cursor="Hand" MouseLeave="Label_exitLabel_MouseLeave" Height="38" Canvas.Left="405" Canvas.Top="532"/>
+        <Border Name="Border_Paused" Canvas.Left="37"  Height="74" Width="425"  Canvas.Top="196" CornerRadius="20" Opacity="50" Background="#7FFFFFFF" Visibility="Hidden" >
+            <TextBlock x:Name="textBlock_Paused" TextWrapping="Wrap" Text="PAUSED"  VerticalAlignment="Center" FontSize="64" FontFamily="Magneto" TextAlignment="Center" />
+        </Border>
     </Canvas>
 </Page>

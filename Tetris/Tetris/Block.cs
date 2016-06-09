@@ -88,6 +88,7 @@ namespace Tetris
             newBlock.Cells = newCells;
             return newBlock;
         }
+        //This method copies the contents of the current block and returns a new instance
         public Block CreateCopy()
         {
             Block newBlock = new Block();
@@ -95,6 +96,7 @@ namespace Tetris
             newBlock.Cells = cells;
             return newBlock;
         }
+        //These methods update the origin coordinates of the block
         public void MoveLeft()
         {
             originCoords[0]--;
@@ -109,6 +111,7 @@ namespace Tetris
         }
     }
 
+    [Serializable]
     public class BlockFactory
     {
         Random rand;
@@ -116,6 +119,7 @@ namespace Tetris
         {
             rand = new Random();
         }
+        //Random generator for a block
         public Block GetRandomBlock()
         {
             int randomInt = rand.Next(100);
@@ -156,6 +160,7 @@ namespace Tetris
             return result;
         }
 
+        //The following are templates for the different block types
         public Block NewTBlock()
         {
             Block result = new Block();
@@ -276,6 +281,7 @@ namespace Tetris
         }
     }
 
+    [Serializable]
     public class Cell
     {
         private bool isPopulated;
@@ -291,7 +297,22 @@ namespace Tetris
             }
         }
         private string color;
-        public string Color { get; set; }
+        public string Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    color = value;
+                }
+            }
+        }
+
+        [NonSerialized]
         private Rectangle rect;
         public Rectangle Rect
         {

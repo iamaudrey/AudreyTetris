@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
         Icon="tetrisicon.ico" ResizeMode="CanMinimize" 
-        Title="Tetris" Height="600" Width="500">
+        Title="Tetris" Height="630" Width="500">
 
-    <Frame Source="StartupPage.xaml" NavigationUIVisibility="Hidden">
+    <Frame Name="Frame_MainContent" Source="StartupPage.xaml" NavigationUIVisibility="Hidden">
         
     </Frame>
 </Window>
